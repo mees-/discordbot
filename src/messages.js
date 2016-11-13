@@ -1,6 +1,6 @@
 // this is what the bot says
 module.exports = {
-  nowPlaying: songTitle => `I'm now bustin \`${ songTitle }\``,
+  nowPlaying: songTitle => `I'm now bustin' \`${ songTitle }\``,
   notInVoiceChannel: () => 'Ay, I\'m not in a voice channel man',
   resumed: () => 'I resumed that for ya',
   addedSong: songTitle => `Gotcha! I added \`${ songTitle }\``,
