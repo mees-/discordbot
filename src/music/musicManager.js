@@ -38,14 +38,14 @@ module.exports = class musicManager extends EventEmitter {
     })
 
     // if autoPlay, start when song ends
-    if (this.options.autoPlay) {
-      this.on('song end', () => {
+    this.on('song end', () => {
+      if (this.options.autoPlay) {
         this.next()
         if (this.queue[0]) {
           this.start()
         }
-      })
-    }
+      }
+    })
   }
 
   // bind dispatcher events to manager events
