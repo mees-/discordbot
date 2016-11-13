@@ -1,5 +1,5 @@
 const testVoice = require('../music/testVoice')
-const log = require('debug')('cordlr-music:command:skip')
+const log = require('debug')('bot:command:skip')
 
 module.exports = {
   name: 'skip',

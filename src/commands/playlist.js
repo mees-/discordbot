@@ -1,7 +1,7 @@
 const { noPlaylistId, startPlaylist, errorPlSong } = require('../messages')
 const Song = require('../music/Song')
 const ytpl = require('../music/ytpl')
-const log = require('debug')('cordlr-music:command:playlist')
+const log = require('debug')('bot:command:playlist')
 const testVoice = require('../music/testVoice')
 
 module.exports = {

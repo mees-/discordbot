@@ -2,7 +2,7 @@ const Excord = require('excord')
 const router = require('./routes')
 
 const options = {
-  prefix: '/',
+  prefix: '/' || process.env.BOT_PREFIX,
   token: process.env.BOT_TOKEN
 }
 

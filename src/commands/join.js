@@ -1,5 +1,5 @@
 const MusicManager = require('../music/musicManager')
-const log = require('debug')('cordlr-music:command:join')
+const log = require('debug')('bot:command:join')
 const { userNotInVoice } = require('../messages')
 
 module.exports = {

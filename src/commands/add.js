@@ -1,5 +1,5 @@
 const Song = require('../music/Song')
-const log = require('debug')('cordlr-music:command:add')
+const log = require('debug')('bot:command:add')
 const { addedSong, errorAddedSong } = require('../messages')
 const testVoice = require('../music/testVoice')
 

@@ -1,5 +1,5 @@
 const EventEmitter = require('events')
-const log = require('debug')('cordlr-music:musicManager')
+const log = require('debug')('bot:musicManager')
 const { nowPlaying } = require('../messages')
 
 const defaultOptions = {
