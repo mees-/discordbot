@@ -16,7 +16,7 @@ module.exports = {
       .then((info) => {
         const manager = req.guild.voiceConnection.musicManager
         const song = new Song(req.params.get('url'), info, req.author, req.channel)
-        if (Math.random() <= 0.1) {
+        if (Math.random() <= 0.01) {
           // easter egg, 1% chance to add rick astley - Never Gonna Give You Up
           song.getStream = () =>
             ytdl('https://www.youtube.com/watch?v=dQw4w9WgXcQ', { format: 'audioonly' })
