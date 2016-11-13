@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "eslint-config-mees": "1.1.22",
-    "excord": "beta",
+    "excord": "0.2.0",
     "node-opus": "^0.2.4",
     "request": "^2.78.0",
     "request-promise-native": "^1.0.3",
