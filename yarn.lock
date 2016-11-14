@@ -416,9 +416,9 @@ event-emitter@~0.3.4:
     d "~0.1.1"
     es5-ext "~0.10.7"
 
-excord@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/excord/-/excord-0.2.0.tgz#8ccdea1e35c958b62fbf2331cf65723b48e5dca5"
+excord@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/excord/-/excord-1.1.0.tgz#5ab2046b153d976d394cc2376fd14fba0e0d3ef1"
   dependencies:
     debug "^2.3.0"
     discord.js "^10.0.1"
