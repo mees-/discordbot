@@ -1,5 +1,5 @@
-const testVoice = require('../music/testVoice')
-const { clearedQueue } = require('../messages')
+const testVoice = require('../../music/testVoice')
+const { clearedQueue } = require('../../messages')
 
 module.exports = {
   name: 'clear',

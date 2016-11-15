@@ -1,5 +1,5 @@
-const { changeVolume, tooHighVolume } = require('../messages')
-const testVoice = require('../music/testVoice')
+const { changeVolume, tooHighVolume } = require('../../messages')
+const testVoice = require('../../music/testVoice')
 const log = require('debug')('corldlr-music:command:volume')
 
 module.exports = {

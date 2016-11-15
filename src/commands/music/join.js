@@ -1,6 +1,6 @@
-const MusicManager = require('../music/musicManager')
+const MusicManager = require('../../music/musicManager')
 const log = require('debug')('bot:command:join')
-const { userNotInVoice } = require('../messages')
+const { userNotInVoice } = require('../../messages')
 
 module.exports = {
   name: 'join',

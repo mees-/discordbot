@@ -1,4 +1,4 @@
-const testVoice = require('../music/testVoice')
+const testVoice = require('../../music/testVoice')
 
 module.exports = {
   name: 'restart',

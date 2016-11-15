@@ -1,7 +1,7 @@
-const Song = require('../music/Song')
+const Song = require('../../music/Song')
 const log = require('debug')('bot:command:add')
-const { addedSong, errorAddedSong } = require('../messages')
-const testVoice = require('../music/testVoice')
+const { addedSong, errorAddedSong } = require('../../messages')
+const testVoice = require('../../music/testVoice')
 
 // for easter egg
 const ytdl = require('ytdl-core')
