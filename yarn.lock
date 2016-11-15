@@ -416,9 +416,9 @@ event-emitter@~0.3.4:
     d "~0.1.1"
     es5-ext "~0.10.7"
 
-excord@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/excord/-/excord-1.1.0.tgz#5ab2046b153d976d394cc2376fd14fba0e0d3ef1"
+excord:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/excord/-/excord-1.1.1.tgz#dc12e7ed3a683a3fdf69d8de739d966d131ce93e"
   dependencies:
     debug "^2.3.0"
     discord.js "^10.0.1"
@@ -849,6 +849,10 @@ options@>=0.0.5:
 os-homedir@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/os-homedir/-/os-homedir-1.0.2.tgz#ffbc4988336e0e833de0c168c7ef152121aa7fb3"
+
+p-queue:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/p-queue/-/p-queue-0.1.0.tgz#6d57ccc409bd6370dd0a251be0713a7f62ecc581"
 
 path-is-absolute@^1.0.0:
   version "1.0.1"
