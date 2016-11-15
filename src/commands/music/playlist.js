@@ -1,50 +1,57 @@
-const { noPlaylistId, startPlaylist, errorPlSong } = require('../messages')
-const Song = require('../music/Song')
-const ytpl = require('../music/ytpl')
+const { noPlaylistId, startPlaylist, endPlSongsError, endPlSongsSuccess } = require('../../messages')
+const Song = require('../../music/Song')
+const ytpl = require('../../music/ytpl')
 const log = require('debug')('bot:command:playlist')
-const testVoice = require('../music/testVoice')
+const testVoice = require('../../music/testVoice')
+const PQueue = require('p-queue')
 
 module.exports = {
   name: 'playlist :listUrl',
   usage: 'playlist <playlist url>',
 
-  run(req, res) {
-    const API_KEY = 'AIzaSyBUCT0piaZuI6W6dCvXt4LdWoQ4vMmCwZY'
+  async run(req, res) {
+    const API_KEY = process.env.BOT_YT_API || ''
     if (!testVoice(req)) return
     const pidReg = /.+list=(.+)&?/
-    const pid = req.params.get('listUrl').match(pidReg)[1]
+    // leave it as the entire result of the match to test for match | null
+    const matched = req.params.get('listUrl').match(pidReg)
+    if (!matched) {
+      return res.end(noPlaylistId())
+    }
+    const pid = matched[1]
     if (!pid) {
       return res.end(noPlaylistId())
     }
-    res.end(startPlaylist())
-    const songStream = ytpl(pid, API_KEY)
 
-    const todo = []
-    let index = 0
-    let running = false
-    let interval
-    songStream.on('data', (data) => {
-      todo.push(data)
-      if (!running) {
-        running = true
-        interval = setInterval(() => {
-          if (!todo[index]) return clearInterval(interval)
-          const url = `https://www.youtube.com/watch?v=${ todo[index].contentDetails.videoId }`
-          Song.getInfo(url)
-            .then((info) => {
-              const song = new Song(url, info, req.author, req.channel)
-              req.guild.voiceConnection.musicManager.addSong(song)
-            })
-            .catch((e) => {
-              log('an error occured while getting a playlist song', e)
-              res.end(errorPlSong())
-            })
-          index++
-        }, 30)
+    res.end(startPlaylist())
+
+    const plSongs = await ytpl(pid, API_KEY)
+    const queue = new PQueue({ concurrency: 2 })
+    let errors = 0
+
+    async function getAndAddSong(url) {
+      try {
+        const info = await Song.getInfo(url)
+        const song = new Song(url, info, req.author, req.channel)
+        req.guild.voiceConnection.musicManager.addSong(song)
+      } catch (e) {
+        errors++
+        log(`An error occured when getting songinfo, song url: ${ url }`)
+        log('error:', e)
+      }
+    }
+
+    for (const plSong of plSongs) {
+      const url = `https://www.youtube.com/watch?v=${ plSong.contentDetails.videoId }`
+      queue.add(getAndAddSong.bind(null, url))
+    }
+    queue.onEmpty(() => {
+      log('done with playlist')
+      if (errors === 0) {
+        req.end(endPlSongsSuccess())
+      } else {
+        req.end(endPlSongsError(errors))
       }
     })
-    songStream.on('error', e => log('error during playlist request', e))
   }
 }
-
-// `https://www.youtube.com/watch?v=${item.contentDetails.videoId}`
