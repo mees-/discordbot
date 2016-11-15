@@ -39,6 +39,7 @@ module.exports = class musicManager extends EventEmitter {
 
     // if autoPlay, start when song ends
     this.on('song end', () => {
+      log(`song end ${ this.queue[0].title }`)
       if (this.options.autoPlay) {
         this.next()
         if (this.queue[0]) {
