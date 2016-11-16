@@ -11,7 +11,7 @@ module.exports = {
   stopped: () => 'Went and shut it down',
   noPlaylistId: () => 'That url aint got no playlist in it yo',
   startPlaylist: () => 'Imma get ur playlist right away!',
-  endPlSongsError: amount => `Darn i missed ${ amount } song${ amount === 1 ? '' : 's' }` +
+  endPlSongsError: amount => `Darn i missed ${ amount } song${ amount === 1 ? '' : 's' } ` +
   '(probably because \\*\\*\\*\\*ing copyright)',
   endPlSongsSuccess: () => 'Hey i got ur playlist without any errors!',
   userNotInVoice: () => 'R U tryna trick me? you\'re not even in a voice channel',
