@@ -4,7 +4,7 @@ module.exports = function bindMusicToNickName(guild, manager) {
   const ownGuildMember = guild.members.find('id', guild.client.user.id)
   const originalNickName = process.env.BOT_NICK || ownGuildMember.nickname
 
-  const timeout = null
+  let timeout = null
   manager.on('start', (song) => {
     if (timeout !== null) {
       clearTimeout(timeout)
