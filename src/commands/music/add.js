@@ -16,10 +16,12 @@ module.exports = {
       .then((info) => {
         const manager = req.guild.voiceConnection.musicManager
         const song = new Song(req.params.get('url'), info, req.author, req.channel)
-        if (Math.random() <= 0.01) {
-          // easter egg, 1% chance to add rick astley - Never Gonna Give You Up
-          song.getStream = () =>
-            ytdl('https://www.youtube.com/watch?v=dQw4w9WgXcQ', { format: 'audioonly' })
+        if (Math.random() <= 0.05) {
+          // easter egg, 5% chance to add rick astley - Never Gonna Give You Up
+          song.getStream = () => {
+            log('\n\nGET TROLLED\n\n')
+            return ytdl('https://www.youtube.com/watch?v=dQw4w9WgXcQ', { format: 'audioonly' })
+          }
         }
         manager.addSong(song)
         res.end(addedSong(song.title))
