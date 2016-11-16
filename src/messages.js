@@ -16,5 +16,6 @@ module.exports = {
   endPlSongsSuccess: () => 'Hey i got ur playlist without any errors!',
   userNotInVoice: () => 'R U tryna trick me? you\'re not even in a voice channel',
   clearedQueue: () => 'Cleaned that mess up, pfff',
-  tooHighVolume: () => 'JESUS CHRIST DON\'T TRY THAT AGAIN (panic)'
+  tooHighVolume: () => 'JESUS CHRIST DON\'T TRY THAT AGAIN (panic)',
+  left: () => 'Cya later Aligator 🐊 🐊'
 }

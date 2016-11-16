@@ -135,4 +135,10 @@ module.exports = class musicManager extends EventEmitter {
       this._boundDispatcher.setVolumeDecibels(volume)
     }
   }
+
+  kill() {
+    this.forceStop()
+    this.queue = []
+    this.history = []
+  }
 }

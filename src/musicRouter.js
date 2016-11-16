@@ -12,7 +12,8 @@ const commands = [
   require('./commands/music/resume'),
   require('./commands/music/skip'),
   require('./commands/music/start'),
-  require('./commands/music/volume')
+  require('./commands/music/volume'),
+  require('./commands/music/leave')
 ]
 
 // create router
