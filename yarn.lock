@@ -375,9 +375,9 @@ eslint:
     text-table "~0.2.0"
     user-home "^2.0.0"
 
-eslint-config-mees@1.1.22:
-  version "1.1.22"
-  resolved "https://registry.yarnpkg.com/eslint-config-mees/-/eslint-config-mees-1.1.22.tgz#730f6e3b1ccd0bba01073d4f186aa07c3abd5a96"
+eslint-config-mees@^1.1.25:
+  version "1.1.25"
+  resolved "https://registry.yarnpkg.com/eslint-config-mees/-/eslint-config-mees-1.1.25.tgz#55c780a32006e7c5cc0a57436d0cd38b1ed2c59f"
 
 espree@^3.3.1:
   version "3.3.2"
@@ -416,13 +416,13 @@ event-emitter@~0.3.4:
     d "~0.1.1"
     es5-ext "~0.10.7"
 
-excord:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/excord/-/excord-1.1.1.tgz#dc12e7ed3a683a3fdf69d8de739d966d131ce93e"
+excord@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/excord/-/excord-1.1.2.tgz#06e02f6d6cb4a04c7763c149a1f04b016505b062"
   dependencies:
     debug "^2.3.0"
     discord.js "^10.0.1"
-    path-to-matcher "1.1.0"
+    path-to-matcher "^1.1.2"
 
 exit-hook@^1.0.0:
   version "1.1.1"
@@ -850,10 +850,6 @@ os-homedir@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/os-homedir/-/os-homedir-1.0.2.tgz#ffbc4988336e0e833de0c168c7ef152121aa7fb3"
 
-p-queue:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/p-queue/-/p-queue-0.1.0.tgz#6d57ccc409bd6370dd0a251be0713a7f62ecc581"
-
 path-is-absolute@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/path-is-absolute/-/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
@@ -862,9 +858,9 @@ path-is-inside@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/path-is-inside/-/path-is-inside-1.0.2.tgz#365417dede44430d1c11af61027facf074bdfc53"
 
-path-to-matcher@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/path-to-matcher/-/path-to-matcher-1.1.0.tgz#da74ab6ec327b97ac132b5bc58a5b94601c16e2e"
+path-to-matcher@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/path-to-matcher/-/path-to-matcher-1.1.2.tgz#850ea5dcfec66d63553763a57df93169257c4422"
 
 pify@^2.0.0:
   version "2.3.0"

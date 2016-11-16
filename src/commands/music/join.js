@@ -1,6 +1,7 @@
 const MusicManager = require('../../music/musicManager')
 const log = require('debug')('bot:command:join')
 const { userNotInVoice } = require('../../messages')
+const bindNickname = require('../../music/bindNickname')
 
 module.exports = {
   name: 'join',
@@ -16,6 +17,8 @@ module.exports = {
       .then((connection) => {
         // attach MusicManager
         connection.musicManager = new MusicManager(connection)
+        // bind nickname to musicManager
+        // bindNickname(req.guild, connection.musicManager)
       })
   }
 }
