@@ -375,9 +375,9 @@ eslint:
     text-table "~0.2.0"
     user-home "^2.0.0"
 
-eslint-config-mees@^1.1.25:
-  version "1.1.25"
-  resolved "https://registry.yarnpkg.com/eslint-config-mees/-/eslint-config-mees-1.1.25.tgz#55c780a32006e7c5cc0a57436d0cd38b1ed2c59f"
+eslint-config-mees@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-mees/-/eslint-config-mees-1.2.0.tgz#09a26301417cfee01a929aa7c5312e9cc3975d7d"
 
 espree@^3.3.1:
   version "3.3.2"
