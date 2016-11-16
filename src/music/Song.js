@@ -23,6 +23,18 @@ module.exports = class Song {
     return stream
   }
 
+  get shortTitle() {
+    let title = this.title
+    const split = this.title.split('-')
+    if (split[1]) {
+      title = split[1]
+    }
+    if (title.length > 26) {
+      title = title.slice(0, 26)
+      title += '...'
+    }
+    return title
+  }
   //  export with Song and wrap in promise
   static getInfo() {
     return new Promise((resolve, reject) => {

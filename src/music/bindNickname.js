@@ -1,13 +1,27 @@
+const debug = require('debug')('bot:music:bindnickname')
+
 module.exports = function bindMusicToNickName(guild, manager) {
   const ownGuildMember = guild.members.find('id', guild.client.user.id)
-  const originalNickName = ownGuildMember.nickname
+  const originalNickName = process.env.BOT_NICK || ownGuildMember.nickname
+
+  const timeout = null
   manager.on('start', (song) => {
-    ownGuildMember.setNickname(`- ${ song.title }`)
-  })
-  manager.on('song end', () => {
-    ownGuildMember.setNickname(originalNickName)
+    if (timeout !== null) {
+      clearTimeout(timeout)
+      timeout = null
+    }
+    ownGuildMember.setNickname(`- ${ song.shortTitle }`)
     .catch((e) => {
-      console.log(e)
+      debug('error when setting nickname', e)
     })
+  })
+
+  manager.on('song end', () => {
+    timeout = setTimeout(() => {
+      ownGuildMember.setNickname(originalNickName)
+      .catch((e) => {
+        debug('error when setting nickname', e)
+      })
+    }, 500)
   })
 }

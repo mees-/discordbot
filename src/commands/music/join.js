@@ -18,7 +18,7 @@ module.exports = {
         // attach MusicManager
         connection.musicManager = new MusicManager(connection)
         // bind nickname to musicManager
-        // bindNickname(req.guild, connection.musicManager)
+        bindNickname(req.guild, connection.musicManager)
       })
   }
 }
