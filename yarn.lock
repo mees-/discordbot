@@ -850,6 +850,10 @@ os-homedir@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/os-homedir/-/os-homedir-1.0.2.tgz#ffbc4988336e0e833de0c168c7ef152121aa7fb3"
 
+p-queue:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/p-queue/-/p-queue-0.1.0.tgz#6d57ccc409bd6370dd0a251be0713a7f62ecc581"
+
 path-is-absolute@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/path-is-absolute/-/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"

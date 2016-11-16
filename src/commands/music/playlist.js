@@ -3,6 +3,7 @@ const Song = require('../../music/Song')
 const ytpl = require('../../music/ytpl')
 const log = require('debug')('bot:command:playlist')
 const testVoice = require('../../music/testVoice')
+const PQueue = require('p-queue')
 
 module.exports = {
   name: 'playlist :listUrl',
@@ -23,21 +24,12 @@ module.exports = {
     if (!pid) {
       return res.end(noPlaylistId())
     }
-
-    // start getting songs
-    // ytpl(pid, API_KEY)
-    //   .then((plSongs) => {
-    //     const todos = []
-    //     for (const song of plSongs) {
-    //
-    //     }
-    //   })
-    (async () => {
+    res.end(startPlaylist())
+    ;(async () => {
       const plSongs = await ytpl(pid, API_KEY)
       const todos = []
       let errors = 0
       for (const plSong of plSongs) {
-        log(`pushing ${ todos.length }`)
         todos.push(async () => {
           const url = `https://www.youtube.com/watch?v=${ plSong.contentDetails.videoId }`
           const info = await Song.getInfo(url)
@@ -45,22 +37,25 @@ module.exports = {
           return song
         })
       }
+      // immediately get the first song and have the rest load lazily
+      todos.shift()().then()
+      const queue = new PQueue({ concurrency: 6 })
       for (const todo of todos) {
-        log(`todo number: ${ todos.indexOf(todo) }`)
-        try {
-          const song = await todo()
+        queue.add(() => todo().then((song) => {
           req.guild.voiceConnection.musicManager.addSong(song)
-          if (todos.indexOf(todo) === todos.length - 1) {
-            res.end(endPlSongsSuccess())
-          }
-        } catch (e) {
-          log('error when getting song', e)
+        })
+        .catch((e) => {
+          log('an error occured when getting a song', e)
           errors++
-          if (todos.indexOf(todo) === todos.length - 1) {
-            res.end(endPlSongsError(errors))
-          }
-        }
+        }))
       }
+      queue.onEmpty().then(() => {
+        if (errors === 0) {
+          res.end(endPlSongsSuccess())
+        } else {
+          res.end(endPlSongsError(errors))
+        }
+      })
     })()
 
   }
