@@ -4,7 +4,7 @@ const musicRouter = require('./musicRouter')
 const options = {
   prefix: process.env.BOT_PREFIX || '/',
   token: process.env.BOT_TOKEN,
-  channelId: process.env.BOT_CHANNEL
+  channelIds: process.env.BOT_CHANNEL.split(',')
 }
 
 // init app
@@ -13,7 +13,7 @@ const app = new Excord()
 // filter based on channel
 app.use((req, res, next) => {
   if (!options.channelId) return next()
-  if (req.channel.id === options.channelId) {
+  if (req.channel.id in options.channelIds) {
     next()
   }
   // if it isn't in the right channel, don't call next and cancel the chain
