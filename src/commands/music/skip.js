@@ -7,10 +7,8 @@ module.exports = {
 
   run(req) {
     if (!testVoice(req)) return
-    let amount = 1
-    try {
-      amount = parseInt(req.params.get('amount'))
-    } catch (e) {}
+    let amount = parseInt(req.params.get('amount'))
+    if (isNaN(amount)) amount = 1
     const manager = req.guild.voiceConnection.musicManager
     manager.next(amount)
     if (manager.queue[0]) {
