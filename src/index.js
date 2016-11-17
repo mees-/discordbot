@@ -4,9 +4,13 @@ const musicRouter = require('./musicRouter')
 const options = {
   prefix: process.env.BOT_PREFIX || '/',
   token: process.env.BOT_TOKEN,
-  channelIds: process.env.BOT_CHANNEL.split(',')
+  channelIds: process.env.BOT_CHANNEL
 }
-
+try {
+  options.channelIds = options.channelIds.split(',')
+} catch (e) {
+  delete options.channelIds
+}
 // init app
 const app = new Excord()
 
