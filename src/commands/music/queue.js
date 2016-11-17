@@ -7,7 +7,7 @@ module.exports = {
   run(req, res) {
     if (!testVoice(req)) return
     const queueArr = formatQueue(req.guild.voiceConnection.musicManager.queue)
-    res.message.reply(queueArr, { split: true })
+    res.end(queueArr, { split: true })
   }
 }
 

@@ -4,11 +4,11 @@ module.exports = function bindMusicToNickName(guild, manager) {
   const ownGuildMember = guild.members.find('id', guild.client.user.id)
   const originalNickName = process.env.BOT_NICK || ownGuildMember.nickname
 
-  let timeout = null
+  let timeout = true
   manager.on('start', (song) => {
-    if (timeout !== null) {
-      clearTimeout(timeout)
-      timeout = null
+    debugger
+    if (timeout) {
+      timeout = false
     }
     ownGuildMember.setNickname(`- ${ song.shortTitle }`)
     .catch((e) => {
@@ -18,10 +18,14 @@ module.exports = function bindMusicToNickName(guild, manager) {
 
   manager.on('song end', () => {
     timeout = setTimeout(() => {
-      ownGuildMember.setNickname(originalNickName)
-      .catch((e) => {
-        debug('error when setting nickname', e)
-      })
-    }, 500)
+      if (timeout) {
+        ownGuildMember.setNickname(originalNickName)
+          .catch((e) => {
+            debug('error when setting nickname', e)
+          })
+      } else {
+        timeout = true
+      }
+    }, 1000)
   })
 }
