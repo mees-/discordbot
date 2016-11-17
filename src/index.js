@@ -12,7 +12,7 @@ const app = new Excord()
 
 // filter based on channel
 app.use((req, res, next) => {
-  if (!options.channelId) return next()
+  if (!options.channelIds) return next()
   if (req.channel.id in options.channelIds) {
     next()
   }
