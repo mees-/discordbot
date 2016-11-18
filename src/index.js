@@ -1,5 +1,6 @@
 const Excord = require('excord')
 const musicRouter = require('./musicRouter')
+const debug = require('debug')('bot:index')
 
 const options = {
   prefix: process.env.BOT_PREFIX || '/',
@@ -16,8 +17,11 @@ const app = new Excord()
 
 // filter based on channel
 app.use((req, res, next) => {
-  if (!options.channelIds) return next()
-  if (req.channel.id in options.channelIds) {
+  if (!options.channelIds) {
+    debug('No channelIds')
+    return next()
+  }
+  if (options.channelIds.includes(req.channel.id)) {
     next()
   }
   // if it isn't in the right channel, don't call next and cancel the chain
