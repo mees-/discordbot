@@ -15,7 +15,7 @@ module.exports = {
     const API_KEY = process.env.BOT_YT_API
     // gather req info
     const pidReg = /.+list=(.+)&?/
-    // leave it as the entire result of the match to test for match | null
+    // leave it as the entire result of the match to test for match || null
     const matched = req.params.get('listUrl').match(pidReg)
     if (!matched) {
       return res.end(noPlaylistId())
@@ -26,7 +26,7 @@ module.exports = {
     }
     res.end(startPlaylist())
     ;(async () => {
-      const plSongs = await ytpl(pid, API_KEY)
+      let plSongs = await ytpl(pid, API_KEY)
       const todos = []
       let errors = 0
       for (const plSong of plSongs) {
@@ -37,9 +37,14 @@ module.exports = {
           return song
         })
       }
+      plSongs = null // dereference to save memory
       // immediately get the first song and have the rest load lazily
-      todos.shift()().then()
-      const queue = new PQueue({ concurrency: 6 })
+      try {
+        const firstSong = await todos.shift()()
+        req.guild.voiceConnection.musicManager.addSong(firstSong)
+      } catch (e) {}
+
+      const queue = new PQueue({ concurrency: 4 })
       for (const todo of todos) {
         queue.add(() => todo().then((song) => {
           req.guild.voiceConnection.musicManager.addSong(song)
