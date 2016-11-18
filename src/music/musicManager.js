@@ -9,16 +9,13 @@ const defaultOptions = {
 }
 
 module.exports = class musicManager extends EventEmitter {
-  constructor(connection, { maxHistory, autoPlay, volume } = defaultOptions) {
+  constructor(connection, options) {
     // init super
     super()
+    // merge options with defaults
+    this.options = Object.assign({}, defaultOptions, options)
     // store the arguments
     this._connection = connection
-    this.options = {
-      maxHistory,
-      autoPlay,
-      volume
-    }
 
     // set interal properties
     this.queue = []
