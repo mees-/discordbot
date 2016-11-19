@@ -16,7 +16,7 @@ module.exports = {
 function formatQueue(queue, startAtIndex = 0) {
   const lines = ['Queue:\n']
   let index = startAtIndex
-  for (let i = index; i < 11; i++) {
+  for (let i = index; i < Math.min(11, queue.length); i++) {
     const song = queue[index]
     lines.push(`${ index }.\t${ song.title }`)
     index++
