@@ -22,7 +22,9 @@ const server = webApp(app)
 
 // start server when app is ready
 app.on('ready', () => {
-  server.listen(options.webPort)
+  server.listen(options.webPort, () => {
+    debug('server started listening on port:', options.webPort)
+  })
 })
 
 // filter based on channel
