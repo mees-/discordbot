@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+    title list of guilds
+  body
+    ul
+      each guild in guilds
+        li
+          p
+            = guild.name + " : "
+            a(href="/" + guild.id)= guild.id

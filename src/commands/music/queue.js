@@ -7,6 +7,8 @@ module.exports = {
   run(req, res) {
     if (!testVoice(req)) return
     const queueArr = formatQueue(req.guild.voiceConnection.musicManager.queue)
+    queueArr.push('Only showing first 10 songs, for full queue go to: ' +
+      `http://${ process.env.BOT_DOMAIN }/${ req.guild.id }`)
     res.end(queueArr, { split: true })
   }
 }
@@ -14,11 +16,12 @@ module.exports = {
 function formatQueue(queue, startAtIndex = 0) {
   const lines = ['Queue:\n']
   let index = startAtIndex
-  for (let i = index; i < queue.length; i++) {
+  for (let i = index; i < 11; i++) {
     const song = queue[index]
     lines.push(`${ index }.\t${ song.title }`)
     index++
   }
+
 
   return lines
 }
