@@ -9,7 +9,7 @@ module.exports = {
   run(req, res) {
     if (!testVoice(req)) return
     const newVolume = req.params.get('vol') / 100
-    if (newVolume >= 300) {
+    if (newVolume >= 3) {
       log('Not allowing volumes over 300, people hate it.')
       return res.end(tooHighVolume())
     }
