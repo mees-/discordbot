@@ -18,5 +18,8 @@ module.exports = {
   tooHighVolume: () => 'JESUS CHRIST DON\'T TRY THAT AGAIN (panic)',
   left: () => 'Cya later Aligator 🐊 🐊',
   pausedSong: () => 'Your turn',
-  repeated: amount => `Repeated your song ${ amount } time${ amount === 1 ? '' : 's' }`
+  repeated: amount => `Repeated your song ${ amount } time${ amount === 1 ? '' : 's' }`,
+  joinedSucces: () => '**deep voice**    I\'m in',
+  joinedFail: () => 'I can\'t make it to your channel because of an error, sawry :(',
+  hitYtLimit: () => 'sorry but i can\'t get any more playlists today cuz google wont let me'
 }

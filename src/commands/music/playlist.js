@@ -1,9 +1,16 @@
-const { noPlaylistId, startPlaylist, endPlSongsError, endPlSongsSuccess } = require('../../messages')
 const Song = require('../../music/Song')
 const ytpl = require('../../music/ytpl')
 const log = require('debug')('bot:command:playlist')
 const testVoice = require('../../music/testVoice')
 const PQueue = require('p-queue')
+// messages
+const {
+  noPlaylistId,
+  startPlaylist,
+  endPlSongsError,
+  endPlSongsSuccess,
+  hitYtLimit
+} = require('../../messages')
 
 module.exports = {
   name: 'playlist :listUrl',
@@ -26,7 +33,12 @@ module.exports = {
     }
     res.end(startPlaylist())
     ;(async () => {
-      let plSongs = await ytpl(pid, API_KEY)
+      let plSongs
+      try {
+        plSongs = await ytpl(pid, API_KEY)
+      } catch (e) {
+        return res.end(hitYtLimit())
+      }
       const todos = []
       let errors = 0
       for (const plSong of plSongs) {
@@ -62,6 +74,5 @@ module.exports = {
         }
       })
     })()
-
   }
 }
