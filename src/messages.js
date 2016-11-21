@@ -5,7 +5,7 @@ module.exports = {
   resumed: () => 'I resumed that for ya',
   addedSong: songTitle => `Gotcha! I added \`${ songTitle }\``,
   errorAddedSong: () => 'Something went wrong and I couldn\'t add your song :(',
-  changeVolume: () => 'Too loud? too quiet? whatevs 😴',
+  changeVolume: more => `${ more ? 'Too loud?' : 'too quiet?' } whatevs 😴`,
   noArg: () => 'At least give me a hint to what you want',
   stopped: () => 'Went and shut it down',
   noPlaylistId: () => 'That url aint got no playlist in it yo',
@@ -17,5 +17,6 @@ module.exports = {
   clearedQueue: () => 'Cleaned that mess up, pfff',
   tooHighVolume: () => 'JESUS CHRIST DON\'T TRY THAT AGAIN (panic)',
   left: () => 'Cya later Aligator 🐊 🐊',
-  pausedSong: () => 'Your turn'
+  pausedSong: () => 'Your turn',
+  repeated: amount => `Repeated your song ${ amount } time${ amount === 1 ? '' : 's' }`
 }

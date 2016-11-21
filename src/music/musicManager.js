@@ -112,6 +112,17 @@ module.exports = class musicManager extends EventEmitter {
     this.options.autoPlay = old
   }
 
+  get volume() {
+    return this.options.volume
+  }
+
+  set volume(volume) {
+    this.options.volume = volume
+    if (this._boundDispatcher) {
+      this._boundDispatcher.setVolume(volume)
+    }
+  }
+
   setVolume(volume) {
     this.options.volume = volume
     if (this._boundDispatcher) {
