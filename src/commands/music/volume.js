@@ -1,4 +1,4 @@
-const { changeVolume, tooHighVolume } = require('../../messages')
+const { changeVolume, tooHighVolume, tooLowVolume } = require('../../messages')
 const testVoice = require('../../music/testVoice')
 const log = require('debug')('corldlr-music:command:volume')
 
@@ -9,6 +9,9 @@ module.exports = {
   run(req, res) {
     if (!testVoice(req)) return
     const newVolume = req.params.get('vol') / 100
+    if (newVolume < 0) {
+      return res.end(tooLowVolume())
+    }
     if (newVolume >= 3) {
       log('Not allowing volumes over 300, people hate it.')
       return res.end(tooHighVolume())

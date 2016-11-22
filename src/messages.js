@@ -22,5 +22,6 @@ module.exports = {
   joinedSucces: () => '**deep voice**    I\'m in',
   joinedFail: () => 'I can\'t make it to your channel because of an error, sawry :(',
   playlistError: () => 'sorry but i can\'t get any playlists cuz google wont let me',
-  noYtAPI: () => 'My owner didn\'t fill in a youtube api key, I need that shit for playlists'
+  noYtAPI: () => 'My owner didn\'t fill in a youtube api key, I need that shit for playlists',
+  tooLowVolume: () => 'Why would you even try that, what were you expecting to happen?'
 }
