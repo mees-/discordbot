@@ -9,12 +9,7 @@ module.exports = async function ytpl(pid, apiKey) {
   }
   const items = []
   async function callback(url) {
-    let res
-    try {
-      res = await request(url)
-    } catch (e) {
-      console.log(e)
-    }
+    const res = await request(url)
     const json = JSON.parse(res)
     for (const item of json.items) {
       items.push(item)
