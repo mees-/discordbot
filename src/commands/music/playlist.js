@@ -9,7 +9,8 @@ const {
   startPlaylist,
   endPlSongsError,
   endPlSongsSuccess,
-  hitYtLimit
+  playlistError,
+  noYtAPI
 } = require('../../messages')
 
 module.exports = {
@@ -20,6 +21,9 @@ module.exports = {
     if (!testVoice(req)) return
     log('running')
     const API_KEY = process.env.BOT_YT_API
+    if (!API_KEY) {
+      return res.end(noYtAPI())
+    }
     // gather req info
     const pidReg = /.+list=(.+)&?/
     // leave it as the entire result of the match to test for match || null
@@ -37,7 +41,9 @@ module.exports = {
       try {
         plSongs = await ytpl(pid, API_KEY)
       } catch (e) {
-        return res.end(hitYtLimit())
+        log('error with getting playlist', e)
+        log('youtube api key', API_KEY)
+        return res.end(playlistError())
       }
       const todos = []
       let errors = 0

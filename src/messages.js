@@ -21,5 +21,6 @@ module.exports = {
   repeated: amount => `Repeated your song ${ amount } time${ amount === 1 ? '' : 's' }`,
   joinedSucces: () => '**deep voice**    I\'m in',
   joinedFail: () => 'I can\'t make it to your channel because of an error, sawry :(',
-  hitYtLimit: () => 'sorry but i can\'t get any more playlists today cuz google wont let me'
+  playlistError: () => 'sorry but i can\'t get any playlists cuz google wont let me',
+  noYtAPI: () => 'My owner didn\'t fill in a youtube api key, I need that shit for playlists'
 }
