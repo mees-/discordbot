@@ -10,7 +10,7 @@ module.exports = {
   run(req, res) {
     const voiceChannel = req.member.voiceChannel
     if (!voiceChannel) {
-      return res.end(userNotInVoice())
+      return res.send(userNotInVoice())
     }
     log(`joining ${ voiceChannel.guild.name }:${ voiceChannel.name }`)
     return voiceChannel.join()
@@ -19,11 +19,11 @@ module.exports = {
         connection.musicManager = new MusicManager(connection)
         // bind nickname to musicManager
         bindNickname(req.guild, connection.musicManager)
-        res.end(joinedSucces())
+        res.send(joinedSucces())
       })
       .catch((e) => {
         log('an error occured when joining a channel', e)
-        res.end(joinedFail())
+        res.send(joinedFail())
       })
   }
 }

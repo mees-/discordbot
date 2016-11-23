@@ -9,6 +9,6 @@ module.exports = {
     req.guild.voiceConnection.musicManager.kill()
     delete req.guild.voiceConnection.musicManager
     req.guild.voiceConnection.disconnect()
-    res.end(left())
+    res.send(left())
   }
 }

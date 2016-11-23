@@ -22,20 +22,20 @@ module.exports = {
     log('running')
     const API_KEY = process.env.BOT_YT_API
     if (!API_KEY) {
-      return res.end(noYtAPI())
+      return res.send(noYtAPI())
     }
     // gather req info
     const pidReg = /.+list=(.+)&?/
     // leave it as the entire result of the match to test for match || null
     const matched = req.params.get('listUrl').match(pidReg)
     if (!matched) {
-      return res.end(noPlaylistId())
+      return res.send(noPlaylistId())
     }
     const pid = matched[1]
     if (!pid) {
-      return res.end(noPlaylistId())
+      return res.send(noPlaylistId())
     }
-    res.end(startPlaylist())
+    res.send(startPlaylist())
     ;(async () => {
       let plSongs
       try {
@@ -43,7 +43,7 @@ module.exports = {
       } catch (e) {
         log('error with getting playlist', e)
         log('youtube api key', API_KEY)
-        return res.end(playlistError())
+        return res.send(playlistError())
       }
       const todos = []
       let errors = 0
@@ -74,9 +74,9 @@ module.exports = {
       }
       queue.onEmpty().then(() => {
         if (errors === 0) {
-          res.end(endPlSongsSuccess())
+          res.send(endPlSongsSuccess())
         } else {
-          res.end(endPlSongsError(errors))
+          res.send(endPlSongsError(errors))
         }
       })
     })()

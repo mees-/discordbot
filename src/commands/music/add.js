@@ -24,11 +24,11 @@ module.exports = {
           }
         }
         manager.addSong(song)
-        res.end(addedSong(song.title))
+        res.send(addedSong(song.title))
       })
       .catch((err) => {
         log(err)
-        res.end(errorAddedSong())
+        res.send(errorAddedSong())
       })
   }
 }

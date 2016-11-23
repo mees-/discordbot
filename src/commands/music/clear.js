@@ -9,6 +9,6 @@ module.exports = {
     if (!testVoice(req)) return
     const manager = req.guild.voiceConnection.musicManager
     manager.queue.splice(1)
-    res.end(clearedQueue())
+    res.send(clearedQueue())
   }
 }

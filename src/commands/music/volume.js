@@ -10,16 +10,16 @@ module.exports = {
     if (!testVoice(req)) return
     const newVolume = req.params.get('vol') / 100
     if (newVolume < 0) {
-      return res.end(tooLowVolume())
+      return res.send(tooLowVolume())
     }
     if (newVolume >= 3) {
       log('Not allowing volumes over 300, people hate it.')
-      return res.end(tooHighVolume())
+      return res.send(tooHighVolume())
     }
     const manager = req.guild.voiceConnection.musicManager
     const oldVolume = manager.volume
     log(`setting volume to ${ newVolume * 100 }%`)
     manager.volume = newVolume
-    res.end(changeVolume(oldVolume > newVolume))
+    res.send(changeVolume(oldVolume > newVolume))
   }
 }

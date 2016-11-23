@@ -8,6 +8,6 @@ module.exports = {
   run(req, res) {
     if (!testVoice(req)) return
     req.guild.voiceConnection.musicManager.pause()
-    res.end(pausedSong())
+    res.send(pausedSong())
   }
 }

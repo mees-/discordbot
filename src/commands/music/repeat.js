@@ -13,6 +13,6 @@ module.exports = {
     for (let i = 0; i < req.params.get('amount'); i++) {
       manager.addSong(toRepeat, 1)
     }
-    res.end(repeated(req.params.get('amount')))
+    res.send(repeated(req.params.get('amount')))
   }
 }

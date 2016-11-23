@@ -7,6 +7,6 @@ module.exports = {
   run(req, res) {
     if (!testVoice(req)) return
     req.guild.voiceConnection.musicManager.resume()
-    res.end(resumed())
+    res.send(resumed())
   }
 }

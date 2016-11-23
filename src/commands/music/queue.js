@@ -9,7 +9,7 @@ module.exports = {
     const queueArr = formatQueue(req.guild.voiceConnection.musicManager.queue.slice(0, 11))
     queueArr.push('Only showing first 10 songs, for full queue go to: ' +
       `http://${ process.env.BOT_DOMAIN }/${ req.guild.id }`)
-    res.end(queueArr, { split: true })
+    res.send(queueArr, { split: true })
   }
 }
 
