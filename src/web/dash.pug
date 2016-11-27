@@ -2,9 +2,16 @@ doctype html
 html
   head
     title= pageTitle
+    style.
+      a {
+        text-decoration: underline;
+        color: #3e63b7;
+      }
   body
     p= current
     #queue
       ol
         each song in songs
-          li= song.title
+          li
+            a(href= song.url)
+              p= song.title
