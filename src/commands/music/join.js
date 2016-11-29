@@ -16,7 +16,7 @@ module.exports = {
     return voiceChannel.join()
       .then((connection) => {
         // attach MusicManager
-        connection.musicManager = new MusicManager(connection)
+        connection.musicManager = new MusicManager(connection, { textChannel: req.channel })
         // bind nickname to musicManager
         bindNickname(req.guild, connection.musicManager)
         res.send(joinedSucces())

@@ -1,5 +1,7 @@
 const debug = require('debug')('bot:web')
 const express = require('express')
+const bodyParser = require('body-parser')
+const Song = require('../music/Song')
 
 module.exports = function createServer(bot) {
   debug('creating webserver')
@@ -14,59 +16,72 @@ module.exports = function createServer(bot) {
   // view engine
   server.set('views', './src/web')
   server.set('view engine', 'pug')
+  server.use(bodyParser.json())
 
   server.get('/', (req, res) => {
-    const guilds = []
-    for (const guild of bot.guilds.array()) {
-      guilds.push({ name: guild.name, id: guild.id })
-    }
-    res.render('guilds', { guilds })
+    res.json({ hello: 'world' })
   })
 
-  server.get('/:guild', (req, res) => {
-    // find guild
-    const guild = bot.guilds.find('id', req.params.guild)
-    if (!guild) return res.end('No such guild')
-
-    // test for voice
-    if (!guild.voiceConnection) return res.end('No voiceConnection')
-    // find manager
-    const manager = guild.voiceConnection.musicManager
-    if (!manager) return res.end('No musicmanager, let the bot join through the music command')
-
-    const locals = {
-      pageTitle: `dashboard - ${ guild.name }`,
-      songs: manager.queue.map((value, index) => Object.assign({}, value, { index, url: `/${ guild.id }/skip/${ index }` })).slice(1)
-    }
-    if (manager.queue[0]) {
-      locals.current = `Currently playing: ${ manager.queue[0].title }`
-    } else {
-      locals.current = 'Currently playing: nothing'
-    }
-    res.render('dash', locals)
-  })
-  server.get('/:guild/skip/:index', (req, res) => {
-    // find guild
-    const guild = bot.guilds.find('id', req.params.guild)
-    if (!guild) return res.end('No such guild')
-
-    // test for voice
-    if (!guild.voiceConnection) return res.end('No voiceConnection')
-    // find manager
-    const manager = guild.voiceConnection.musicManager
-    if (!manager) return res.end('No musicmanager, let the bot join through the music command')
-
-    const parsedIndex = parseInt(req.params.index)
-    if (isNaN(parsedIndex)) {
-      return res.status(404).end()
+  server.get('/:guildID/info', (req, res) => {
+    const guild = bot.guilds.find('id', req.params.guildID)
+    if (!guild) {
+      return res.status(404).json({ message: `A guild with guildID ${ req.params.guildID } was not found` })
     }
 
-    manager.forceStop()
-    manager.queue = manager.queue.slice(parsedIndex)
-    manager.start()
+    const resp = Object.assign({}, guild, {
+      queue: guild.voiceConnection.musicManager.queue,
+      history: guild.voiceConnection.musicManager.history,
+      options: Object.assign({}, guild.voiceConnection.musicManager.options, { textChannel: undefined })
+    })
 
-    res.redirect(`/${ req.params.guild }`)
+    res.json(resp)
   })
 
-  return server
+  server.post('/:guildID/song', (req, res) => {
+    const guild = bot.guilds.find('id', req.params.guildID)
+    if (!guild) {
+      return res.status(404).json({ message: `A guild with guildID ${ req.params.guildID } was not found` })
+    }
+    
+    if (!guild.voiceConnection || !guild.voiceConnection.musicManager) {
+      return res.status(404).json({ message: 'The guild does not have a proper voiceConnection' })
+    }
+
+    // get info
+    (async () => {
+      const info = await Song.getInfo(req.body.url)
+      const song = new Song(req.body.url, info)
+      return song
+    })()
+      .then((song) => {
+        guild.voiceConnection.musicManager.addSong(song)
+        res.status(200).json({ message: 'Added song succesfully' })
+      })
+      .catch((e) => {
+        debug('error:', e)
+        res.status(424).json({
+          message: 'Could not get info from youtube',
+          error: e
+        })
+      })
+  })
+
+  server.post('/:guildID/skip', (req, res) => {
+    const guild = bot.guilds.find('id', req.params.guildID)
+    if (!guild) {
+      return res.status(404).json({ message: `A guild with guildID ${ req.params.guildID } was not found` })
+    }
+    
+    if (!guild.voiceConnection || !guild.voiceConnection.musicManager) {
+      return res.status(404).json({ message: 'The guild does not have a proper voiceConnection' })
+    }
+
+    guild.voiceConnection.musicManager.next(req.body.amount || 1)
+    guild.voiceConnection.musicManager.start()
+
+    res.status(200).json({ message: `skipped ${ req.body.amount || 1 } times` })
+  })
+
+  return server 
 }
+

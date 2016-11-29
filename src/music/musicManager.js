@@ -20,7 +20,7 @@ module.exports = class musicManager extends EventEmitter {
     // set interal properties
     this.queue = []
     this.history = []
-
+    this.textChannel = options.textChannel
     this.init()
   }
 
@@ -96,7 +96,7 @@ module.exports = class musicManager extends EventEmitter {
       log(`${ this._connection.channel.guild.name }:encountered error on stream`, err)
     })
     this.bind(dispatcher)
-    song.commandChannel.sendMessage(nowPlaying(song.title))
+    this.textChannel.sendMessage(nowPlaying(song.title))
   }
 
   stop() {

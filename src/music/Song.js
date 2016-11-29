@@ -2,13 +2,11 @@ const ytdl = require('ytdl-core')
 const log = require('debug')('bot:Song')
 
 module.exports = class Song {
-  constructor(url, info, addedBy, commandChannel) {
+  constructor(url, info) {
     log(`created ${ info.title }`)
     this.url = url
     this.title = info.title
     this.lengthSecconds = info.length_seconds
-    this.addedBy = addedBy
-    this.commandChannel = commandChannel
   }
 
   formatLength() {
