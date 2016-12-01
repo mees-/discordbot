@@ -81,6 +81,15 @@ module.exports = class musicManager extends EventEmitter {
     }
   }
 
+  remove(id) {
+    const idx = this.queue.find(elem => elem.id === id)
+    if (idx === -1) {
+      throw new Error(`song with id: ${ id } not found`)
+    }
+
+    return this.queue.splice(idx, 1)
+  }
+
   start() {
     const song = this.queue[0]
     log(`${ this._connection.channel.guild.name }:start ${ song.title }`)

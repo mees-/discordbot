@@ -1,4 +1,5 @@
 const ytdl = require('ytdl-core')
+const randomID = require('crypto-random-string')
 const log = require('debug')('bot:Song')
 
 module.exports = class Song {
@@ -7,6 +8,7 @@ module.exports = class Song {
     this.url = url
     this.title = info.title
     this.lengthSecconds = info.length_seconds
+    this.id = randomID(20)
   }
 
   formatLength() {

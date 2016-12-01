@@ -42,7 +42,7 @@ module.exports = function createServer(bot) {
     if (!guild) {
       return res.status(404).json({ message: `A guild with guildID ${ req.params.guildID } was not found` })
     }
-    
+
     if (!guild.voiceConnection || !guild.voiceConnection.musicManager) {
       return res.status(404).json({ message: 'The guild does not have a proper voiceConnection' })
     }
@@ -71,7 +71,7 @@ module.exports = function createServer(bot) {
     if (!guild) {
       return res.status(404).json({ message: `A guild with guildID ${ req.params.guildID } was not found` })
     }
-    
+
     if (!guild.voiceConnection || !guild.voiceConnection.musicManager) {
       return res.status(404).json({ message: 'The guild does not have a proper voiceConnection' })
     }
@@ -82,6 +82,23 @@ module.exports = function createServer(bot) {
     res.status(200).json({ message: `skipped ${ req.body.amount || 1 } times` })
   })
 
-  return server 
-}
+  server.post('/:guildID/remove', (req, res) => {
+    const guild = bot.guilds.find('id', req.params.guildID)
+    if (!guild) {
+      return res.status(404).json({ message: `A guild with guildID ${ req.params.guildID } was not found` })
+    }
 
+    if (!guild.voiceConnection || !guild.voiceConnection.musicManager) {
+      return res.status(404).json({ message: 'The guild does not have a proper voiceConnection' })
+    }
+
+    try {
+      const removedSong = guild.voiceConnection.musicManager.remove(req.body.id)
+      res.json({ removedSong })
+    } catch (e) {
+      res.status(404).json({ message: `A song with id: ${ req.body.id } could not be found` })
+    }
+  })
+
+  return server
+}
