@@ -81,15 +81,6 @@ module.exports = class musicManager extends EventEmitter {
     }
   }
 
-  remove(id) {
-    const idx = this.queue.find(elem => elem.id === id)
-    if (idx === -1) {
-      throw new Error(`song with id: ${ id } not found`)
-    }
-
-    return this.queue.splice(idx, 1)
-  }
-
   start() {
     const song = this.queue[0]
     log(`${ this._connection.channel.guild.name }:start ${ song.title }`)
@@ -119,6 +110,19 @@ module.exports = class musicManager extends EventEmitter {
     this.options.autoPlay = false
     this.stop()
     this.options.autoPlay = old
+  }
+
+  remove(id) {
+    const idx = this.queue.findIndex(elem => elem.id === id)
+    if (idx === -1) {
+      throw new Error(`song with id: ${ id } not found`)
+    }
+
+    const removed = this.queue.splice(idx, 1)
+    if (idx === 0) {
+      this.start()
+    }
+    return removed
   }
 
   get volume() {

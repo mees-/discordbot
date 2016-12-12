@@ -5,27 +5,32 @@ const Song = require('../music/Song')
 
 module.exports = function createServer(bot) {
   debug('creating webserver')
-  const server = express()
+  const app = express()
 
   // logger
-  server.use('/:guild', (req, res, next) => {
-    debug(`request ${ req.params.guild }`)
+  app.use('/', (req, res, next) => {
+    debug('request', req.url)
     next()
   })
 
   // view engine
-  server.set('views', './src/web')
-  server.set('view engine', 'pug')
-  server.use(bodyParser.json())
+  app.set('views', './src/web')
+  app.set('view engine', 'pug')
+  app.use(bodyParser.json())
 
-  server.get('/', (req, res) => {
-    res.json({ hello: 'world' })
+  app.get('/api', (req, res) => {
+    // respond with a list of guildIds
+    res.json({ guilds: Array.from(bot.guilds.keys()) })
   })
 
-  server.get('/:guildID/info', (req, res) => {
+  app.get('/api/:guildID', (req, res) => {
     const guild = bot.guilds.find('id', req.params.guildID)
     if (!guild) {
       return res.status(404).json({ message: `A guild with guildID ${ req.params.guildID } was not found` })
+    }
+    if (!guild.voiceConnection || !guild.voiceConnection.musicManager) {
+      debug('no voice/musicManager')
+      return res.status(404).json({ message: 'The guild doesn\'t have a working voiceConnection' })
     }
 
     const resp = Object.assign({}, guild, {
@@ -37,7 +42,7 @@ module.exports = function createServer(bot) {
     res.json(resp)
   })
 
-  server.post('/:guildID/song', (req, res) => {
+  app.post('/api/:guildID/song', (req, res) => {
     const guild = bot.guilds.find('id', req.params.guildID)
     if (!guild) {
       return res.status(404).json({ message: `A guild with guildID ${ req.params.guildID } was not found` })
@@ -66,26 +71,10 @@ module.exports = function createServer(bot) {
       })
   })
 
-  server.post('/:guildID/skip', (req, res) => {
+  app.delete('/api/:guildId/remove/:songId', (req, res) => {
     const guild = bot.guilds.find('id', req.params.guildID)
     if (!guild) {
-      return res.status(404).json({ message: `A guild with guildID ${ req.params.guildID } was not found` })
-    }
-
-    if (!guild.voiceConnection || !guild.voiceConnection.musicManager) {
-      return res.status(404).json({ message: 'The guild does not have a proper voiceConnection' })
-    }
-
-    guild.voiceConnection.musicManager.next(req.body.amount || 1)
-    guild.voiceConnection.musicManager.start()
-
-    res.status(200).json({ message: `skipped ${ req.body.amount || 1 } times` })
-  })
-
-  server.post('/:guildID/remove', (req, res) => {
-    const guild = bot.guilds.find('id', req.params.guildID)
-    if (!guild) {
-      return res.status(404).json({ message: `A guild with guildID ${ req.params.guildID } was not found` })
+      return res.status(404).json({ message: `A guild with guildId ${ req.params.guildId } was not found` })
     }
 
     if (!guild.voiceConnection || !guild.voiceConnection.musicManager) {
@@ -93,12 +82,12 @@ module.exports = function createServer(bot) {
     }
 
     try {
-      const removedSong = guild.voiceConnection.musicManager.remove(req.body.id)
+      const removedSong = guild.voiceConnection.musicManager.remove(req.params.songId)
       res.json({ removedSong })
     } catch (e) {
-      res.status(404).json({ message: `A song with id: ${ req.body.id } could not be found` })
+      res.status(404).json({ message: `A song with id: ${ req.body.id } could not be found`, error: e.message })
     }
   })
 
-  return server
+  return app
 }
