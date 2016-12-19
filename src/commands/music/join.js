@@ -20,6 +20,7 @@ module.exports = {
         // bind nickname to musicManager
         bindNickname(req.guild, connection.musicManager)
         res.send(joinedSucces())
+        req.client.emit('newMusicManager', connection)
       })
       .catch((e) => {
         log('an error occured when joining a channel', e)

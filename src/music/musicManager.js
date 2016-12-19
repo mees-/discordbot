@@ -99,6 +99,7 @@ module.exports = class musicManager extends EventEmitter {
 
   start() {
     const song = this.queue[0]
+    if (!song) return
     log(`${ this._connection.channel.guild.name }:start ${ song.title }`)
     if (this._boundDispatcher) {
       this.forceStop()
