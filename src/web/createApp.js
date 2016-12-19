@@ -26,11 +26,11 @@ module.exports = function createServer(bot) {
   app.get('/api/:guildID', (req, res) => {
     const guild = bot.guilds.find('id', req.params.guildID)
     if (!guild) {
-      return res.status(404).json({ message: `A guild with guildID ${ req.params.guildID } was not found` })
+      return res.status(404).json({ code: 1, message: `A guild with guildID ${ req.params.guildID } was not found` })
     }
     if (!guild.voiceConnection || !guild.voiceConnection.musicManager) {
       debug('no voice/musicManager')
-      return res.status(404).json({ message: 'The guild doesn\'t have a working voiceConnection' })
+      return res.status(404).json({ code: 0, message: 'The guild doesn\'t have a working voiceConnection' })
     }
 
     const resp = Object.assign({}, guild, {
@@ -71,8 +71,8 @@ module.exports = function createServer(bot) {
       })
   })
 
-  app.delete('/api/:guildId/remove/:songId', (req, res) => {
-    const guild = bot.guilds.find('id', req.params.guildID)
+  app.delete('/api/:guildId/:songId', (req, res) => {
+    const guild = bot.guilds.find('id', req.params.guildId)
     if (!guild) {
       return res.status(404).json({ message: `A guild with guildId ${ req.params.guildId } was not found` })
     }

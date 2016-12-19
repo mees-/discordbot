@@ -2,6 +2,7 @@ const Excord = require('excord')
 const musicRouter = require('./musicRouter')
 const debug = require('debug')('bot:index')
 const webApp = require('./web/createApp')
+const pusherApp = require('./web/createPusher')
 
 const options = {
   prefix: process.env.BOT_PREFIX || '/',
@@ -20,11 +21,13 @@ const app = new Excord()
 // init web app
 const server = webApp(app)
 
+// init pusher app
+const pusher = pusherApp(app) // eslint-disable-line no-unused-vars
+debug('started pusher server')
+
 // start server when app is ready
 app.on('ready', () => {
-  server.listen(options.webPort, () => {
-    debug('server started listening on port:', options.webPort)
-  })
+  debug('ready')
 })
 
 // filter based on channel
@@ -50,4 +53,9 @@ app.use((req, res, next) => {
 // register routers
 app.use(musicRouter)
 
+// start the bot
 app.login(options.token)
+// start the webserver
+server.listen(options.webPort, () => {
+  debug('server started listening on port:', options.webPort)
+})
