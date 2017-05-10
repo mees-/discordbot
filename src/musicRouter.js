@@ -8,6 +8,7 @@ const commands = [
   require('./commands/music/pause'),
   require('./commands/music/playlist'),
   require('./commands/music/queue'),
+  require('./commands/music/repeat'),
   require('./commands/music/restart'),
   require('./commands/music/resume'),
   require('./commands/music/skip'),
