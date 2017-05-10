@@ -1805,9 +1805,9 @@ yargs@~3.10.0:
     decamelize "^1.0.0"
     window-size "0.1.0"
 
-ytdl-core:
-  version "0.7.19"
-  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-0.7.19.tgz#3bd8d23d412de340cdfb0808af85c6a924927cb2"
+ytdl-core@0.8:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-0.8.1.tgz#16b88efaac089d037d568b89ff4474ef6ec19be3"
   dependencies:
     html-entities "^1.1.3"
     sax "^1.1.3"

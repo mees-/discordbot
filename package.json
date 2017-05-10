@@ -24,7 +24,7 @@
     "pusher": "^1.5.1",
     "request": "^2.78.0",
     "request-promise-native": "^1.0.3",
-    "ytdl-core": "^0.7.19"
+    "ytdl-core": "0.8"
   },
   "devDependencies": {
     "eslint": "^3.10.0",
